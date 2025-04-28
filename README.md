@@ -4,6 +4,7 @@
 
 Ce projet est réalisé dans le cadre de ma formation CDA. Ici j'expérimente et découvre JavaScript. Les bases de HTML/CSS ont déjà été abordées.
 Je vais aussi découvrir l'utilisation d'API.
+Le but ici est de créer un site web dynamique à partir de 0. Des fonctionnalités vont être créées grâce à JavaScript : feed avec la possibilité d'ajouter de spost, une galerie qui permet d'ajouter des images, un menu dropdown, une pub type carrousel..
 
 ## Qu'est-ce qu'il y a ici?
 
