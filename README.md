@@ -1,5 +1,10 @@
 # Mon premier projet en JS
 
+## C'est quoi ce projet?
+
+Ce projet est réalisé dans le cadre de ma formation CDA. Ici j'expérimente et découvre JavaScript. Les bases de HTML/CSS ont déjà été abordées.
+Je vais aussi découvrir l'utilisation d'API.
+
 ## Qu'est-ce qu'il y a ici?
 
 Vous pouvez trouver dans ce dossier tout ce qui concerne ce premier projet perso de développementweb en JS :
@@ -12,3 +17,5 @@ Vous pouvez trouver dans ce dossier tout ce qui concerne ce premier projet perso
 
 Cela me permettra d'avoir un suivi de la méthodologie appliquée à ce projet et de me permettre de réfléchir sur ce qui a fonctionné ou non.
 Tout cela dans le but d'améliorer mon approche de projet et de pouvoir réfléchir sur mon mode opératoire. 
+
+
