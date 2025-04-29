@@ -10,4 +10,11 @@ async function fetchJoke(x) {
 }
 
 fetchJoke(10);
-console.log(jokesList);
+
+
+function displayJokesFeed() {
+    const feed = document.getElementById('jokefeed')
+    jokesList.forEach(joke)
+
+}
+
