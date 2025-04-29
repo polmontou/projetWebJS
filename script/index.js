@@ -1,12 +1,13 @@
+let jokesList = [];
 
-async function afficherJoke() {
-    const reponse = await fetch("https://v2.jokeapi.dev/joke/Any?lang=fr");
-    const jokes = await reponse.json();
+async function fetchJoke(x) {
+    for (y=0; y<x; y++) {
+        const reponse = await fetch("https://v2.jokeapi.dev/joke/Any?lang=fr");
+        const joke = await reponse.json();
+        jokesList.push(joke);
+    }
+       
 }
 
-afficherJoke();
-
-jokes.forEach(joke => {
-    
-
-})
+fetchJoke(10);
+console.log(jokesList);
