@@ -10,9 +10,52 @@ header {
     padding: 1rem;
     margin: 1rem;
     background-color: #79696944;
-    border-radius: 1rem;;
+    border-radius: 1rem;
+    position: sticky;
+    top: 0;
+    transition: 0.3s;
+    box-shadow: 0.5rem 0.5rem 0.5rem #8ba014;
+}
+
+header:hover {
+    background-color: #504646;
+    transform: translateY(-0.3em);
 }
 
 .header__image {
     width: 7rem;
+}
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.main__feed{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+.main__feed__joke{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    margin: 2rem;
+    width: 33%;
+    background-color: #51515159;
+    border-radius: 1rem;
+    box-shadow: 0.5rem 0.5rem 0.5rem #8ba014 ;
+}
+.main__feed__joke>p{
+    margin-top: 0;
+}
+.main__feed__joke__button{
+    padding: 0.2rem;
+}
+.main__feed__joke__response{
+    margin: 0;
+    text-align: right;
+}
+.main__title{
+    padding: 1rem;
 }
