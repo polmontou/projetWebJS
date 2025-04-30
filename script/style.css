@@ -5,15 +5,15 @@ body{
 }
 
 header {
-    display: flex;
-    align-items: center;
-
+    /* display: flex;
+    align-items: center; */
+    height: 6rem;
     padding: 1rem;
     margin: 1rem;
     background-color: #838358f5;
     border-radius: 1rem;
     position: sticky;
-    top: 0;
+    top: 1rem;
     transition: 0.3s;
     box-shadow: 0.5rem 0.5rem 0.5rem #8ba014;
 }
@@ -25,14 +25,39 @@ header:hover {
 
 .header__image {
     width: 7rem;
-    position: sticky;
+    position: absolute;
+    right: 35rem;
+    top: 0.4rem
 }
 .header__menu__icon {
+    position: absolute;
+    top: 3rem;
     width: 1.5rem;
     margin-left: 1.5rem;
     padding: 0.5rem;
     border-radius: 0.5rem;
     transition: 0.3s;
+}
+.header__title {
+    position: absolute;
+    right: 17rem;
+
+}
+.header__dropdownMenu {
+    position: absolute;
+    left: 4.5rem;
+}
+.header__dropdownMenu>div {
+    margin: 0.15rem;
+    margin-left: 1rem;
+    padding: 0.15rem;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    background-color: #8ba014;
+    text-align: center;
+    border-radius: 0.5rem;
+    box-shadow: 0.2rem 0.2rem;
+    width: 3.5rem;
 }
 .header__menu__icon:hover {
     background-color: #8ba014;
@@ -56,6 +81,17 @@ main {
     transition: 0.3s;
 }
 .main__reloadButton:hover {
+    background-color: #8ba014;
+    box-shadow: 0.2rem 0.2rem;
+}
+.main__addButton {
+    width: 2rem;
+    margin-left: 1rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: 0.3s;
+}
+.main__addButton:hover {
     background-color: #8ba014;
     box-shadow: 0.2rem 0.2rem;
 }
@@ -85,14 +121,22 @@ main {
     margin: 0;
     text-align: right;
 }
-.header__dropdownMenu>div {
-    margin: 0.15rem;
-    margin-left: 1rem;
-    padding: 0.15rem;
-    padding-left: 0.3rem;
-    padding-right: 0.3rem;
+.main__addForm__form {
     background-color: #8ba014;
-    text-align: center;
-    border-radius: 0.5rem;
-    box-shadow: 0.2rem 0.2rem;
+    position: absolute;
+    top:16rem;
+    right: 3rem;
+    width: 15rem;
+    padding: 1.5rem;
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0.3rem 0.3rem;
+}
+fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    align-items: center;
 }
