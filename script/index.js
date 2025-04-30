@@ -2,18 +2,10 @@ const myUrl = "https://v2.jokeapi.dev/joke/Any?lang=fr";
 let endIsDisplayed = [];
 
 //appel de l'API x fois, pour avoir x blagues
-async function fetchJoke(jokeNumber) {
-    let jokesList = [];
-    for (y=0; y<jokeNumber; y++) {
-        //appel d'API avec fetch
-        const response = await fetch(myUrl)
-        //transforme la réponse au format JSON
-        const joke = await response.json();  
-        //ajoute la blague dans une liste
-        jokesList.push(joke);
-        endIsDisplayed.push(false); 
-    }
-    return jokesList;   
+async function loadJoke() {
+    fetch(myUrl)
+        .then(resp => resp.json())
+        .then(joke => displayOneJoke(joke))
 }
 
 function displayOneJoke(joke) {
@@ -50,14 +42,13 @@ function displayOneJoke(joke) {
     buttonReveal.addEventListener('click', displayJokesEnd);
     feed.appendChild(jokeCard);
 }
- function displayJokesFeed(jokesList) {
-    jokesList.forEach(joke => {
-        displayOneJoke(joke)
-    });
- }
+function displayJokesFeed(jokeNum) {
+    for(i = 0; i < jokeNum ; i++){
+        loadJoke();
+    }
+}
 
-fetchJoke(10)
-    .then (jokesList => displayJokesFeed(jokesList)); 
+displayJokesFeed(10); 
 
 const reloadButton = document.querySelector(".main__reloadButton");
 reloadButton.addEventListener('click', reloadJokes);
@@ -65,8 +56,7 @@ reloadButton.addEventListener('click', reloadJokes);
 function reloadJokes() {
     const feed = document.querySelector('.jokefeed')
     feed.innerHTML='';
-    fetchJoke(10)
-        .then  (jokesList => displayJokesFeed(jokesList)); 
+    displayJokesFeed(10); 
 }
 
 const dropdownMenu = document.querySelector(".header__menu__icon");
@@ -83,17 +73,82 @@ function displayMenu() {
     if (!isMenuDisplayed) {
         const menu = document.querySelector(".header__dropdownMenu");
         for (const paire in choicesMenu) {
-
             const choiceMenu = document.createElement('div');
             choiceMenu.innerHTML = `<a href=${choicesMenu[paire]}>${paire}</a>`
             menu.appendChild(choiceMenu);
         }
-        const logoPage = document.querySelector('.header__image');
-        logoPage.style.marginleft = '4rem';
         isMenuDisplayed = true;
     } else {
         const menu = document.querySelector(".header__dropdownMenu");
         menu.innerHTML = '';
         isMenuDisplayed = false;
     }
+}
+
+const addForm = document.querySelector('.main__addButton');
+addForm.addEventListener('click', displayForm);
+
+let isFormDisplayed = false;
+
+function displayForm() {
+    if (!isFormDisplayed) {
+        const divAddForm = document.querySelector('.main__addForm');
+        const form = document.createElement('div');
+        form.className = 'main__addForm__form'
+        divAddForm.appendChild(form);
+        
+        form.innerHTML = `
+        <fieldset>
+            <legend>Votre blague à ajouter</legend>
+            <label for="setup">Question :</label><br>
+            <input type="text" id="setup" name="setup" required><br>
+            <label for="delivery">Réponse :</label><br>
+            <input type="text" id="delivery" name="delivery"><br>
+            <button type="submit" class="main__addForm__form__submitButton">Afficher ma blague</button>
+        </fieldset>
+        <p>OU :</p>
+        `
+        const submitButton = document.querySelector(".main__addForm__form__submitButton");
+        submitButton.addEventListener('click', displayAddedJoke);
+       
+        //crée un bouton qui ajoute une blague random en faisant appel à l'API
+        const randJokeButton = document.createElement("button");
+        form.appendChild(randJokeButton);
+        randJokeButton.className = 'main__addForm__form__randJokeButton';
+        randJokeButton.textContent = 'Nouvelle blague aléatoire';
+        randJokeButton.addEventListener('click', addRandJoke);
+
+
+        isFormDisplayed = true;
+    } else {
+        const divAddForm = document.querySelector('.main__addForm');
+        divAddForm.innerHTML='';
+
+        isFormDisplayed = false;
+    }
+}
+
+function getUserData() {
+    let addedJoke = {};
+    addedJoke.setup = document.querySelector('#setup').value;
+    addedJoke.delivery = document.querySelector('#delivery').value;
+    return addedJoke;
+
+
+}
+
+function displayAddedJoke() {
+    displayOneJoke(getUserData());
+    const divAddForm = document.querySelector('.main__addForm');
+    divAddForm.innerHTML='';
+
+    isFormDisplayed = false;
+}
+
+function addRandJoke() {
+    loadJoke();
+    const divAddForm = document.querySelector('.main__addForm');
+    divAddForm.innerHTML='';
+
+    isFormDisplayed = false;
 }
