@@ -26,7 +26,7 @@ header:hover {
 .header__image {
     width: 7rem;
     position: absolute;
-    right: 35rem;
+    right: 20rem;
     top: 0.4rem
 }
 .header__menu__icon {
@@ -40,7 +40,7 @@ header:hover {
 }
 .header__title {
     position: absolute;
-    right: 17rem;
+    right: 2rem;
 
 }
 .header__dropdownMenu {
@@ -73,28 +73,18 @@ main {
     align-items: center;
     padding: 1rem;
 }
-.main__reloadButton {
+.main__title__button {
     width: 2rem;
     margin-left: 1rem;
     padding: 0.5rem;
     border-radius: 0.5rem;
     transition: 0.3s;
 }
-.main__reloadButton:hover {
+.main__title__button:hover {
     background-color: #8ba014;
     box-shadow: 0.2rem 0.2rem;
 }
-.main__addButton {
-    width: 2rem;
-    margin-left: 1rem;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    transition: 0.3s;
-}
-.main__addButton:hover {
-    background-color: #8ba014;
-    box-shadow: 0.2rem 0.2rem;
-}
+
 .main__feed{
     display: flex;
     flex-wrap: wrap;
@@ -121,7 +111,7 @@ main {
     margin: 0;
     text-align: right;
 }
-.main__addForm__form {
+.main__addForm__form, .main__addImgWindow {
     background-color: #8ba014;
     position: absolute;
     top:16rem;
@@ -139,4 +129,20 @@ fieldset {
     flex-direction: column;
     gap: 0.1rem;
     align-items: center;
+}
+.displayGallery {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3rem;
+}
+.displayList {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.main__gallery__monsterImage--gallery {
+    width: 30%;
+    border-radius: 2rem;
 }
