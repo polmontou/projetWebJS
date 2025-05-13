@@ -35,10 +35,10 @@ if(document.querySelector('#feed')){
     async function loadJoke() {
         fetch(myUrl)
             .then(resp => resp.json())
-            .then(joke => displayOneJoke(joke))
+            .then(joke => displayOneJoke(joke, false))
     }
 
-    function displayOneJoke(joke) {
+    function displayOneJoke(joke, manuallyAdded) {
         //on lie la division "jokeFeed" à ma fonction
         const feed = document.querySelector('.jokefeed')
         //crée une div pour ma blague
@@ -71,6 +71,19 @@ if(document.querySelector('#feed')){
         //lie mon bouton créé au-dessus à ma fonction par le click de l'utilisateur
         buttonReveal.addEventListener('click', displayJokesEnd);
         feed.appendChild(jokeCard);
+        if (manuallyAdded){
+            const removeButton = document.createElement('div');
+            jokeCard.appendChild(removeButton);
+            jokeCard.style.position = 'relative';
+            removeButton.className = "main__removeAddedContent"
+            removeButton.textContent= "X";
+
+            removeButton.addEventListener('click', removeAddedContent);
+            function removeAddedContent() {
+                jokeCard.remove()
+            }
+        }
+
     }
     function displayJokesFeed(jokeNum) {
         for(i = 0; i < jokeNum ; i++){
@@ -147,7 +160,7 @@ if(document.querySelector('#feed')){
     }
 
     function displayAddedJoke() {
-        displayOneJoke(getUserData());
+        displayOneJoke(getUserData(), true);
         const divAddForm = document.querySelector('.main__addForm');
         divAddForm.innerHTML='';
 
@@ -166,7 +179,7 @@ if(document.querySelector('#feed')){
 //va aller chercher le code en dessous uniquement si je suis sur la page du feed (page accueil)
 if(document.querySelector('#gallery')){
     //affichage du feed d'image de monstres
-    const numberMonsterImg = 10;
+    const numberMonsterImg = 11;
     let monstersList;
 
     //charge une liste de monstres
@@ -182,20 +195,33 @@ if(document.querySelector('#gallery')){
             let URL = 'https://www.dnd5eapi.co'+monstersList.results[randomIndex].url;
             fetch(URL)
                 .then(resp => resp.json())
-                .then(monster => displayMonsterImg('https://www.dnd5eapi.co'+monster.image, monster.name))
+                .then(monster => displayMonsterImg('https://www.dnd5eapi.co'+monster.image, monster.name, false))
     }
 
     //affiche l'image du monstre
-    function displayMonsterImg(imgUrl, monsterName) {
+    function displayMonsterImg(imgUrl, monsterName, manuallyAdded) {
         const gallery = document.querySelector('#main__gallery');
         gallery.className = "displayGallery";
-        const imgCard = document.createElement('img');
+        const imgCard = document.createElement('div');
         gallery.appendChild(imgCard);
-        imgCard.src = imgUrl;
-        imgCard.className ="main__gallery__monsterImage--gallery" ;
-        imgCard.alt=monsterName;
-        imgCard.title=monsterName;
-    } 
+        imgCard.innerHTML = `<img src='${imgUrl}' alt='${monsterName}' id='main__gallery__monsterImage' class='main__gallery__monsterImage--gallery' title='${monsterName}'>`;
+
+        if (manuallyAdded){
+            const removeButton = document.createElement('div');
+            imgCard.appendChild(removeButton);
+            imgCard.style.position = 'relative';
+            removeButton.className = "main__removeAddedContent"
+            removeButton.textContent= "X";
+
+
+
+            removeButton.addEventListener('click', removeAddedContent);
+            function removeAddedContent() {
+                imgCard.remove()
+            }
+        }
+        }
+     
     
     //permet l'affichage de la gallerie de monstre avec un nombre d'images défini
     async function displayMonsterGallery(){
@@ -214,6 +240,8 @@ if(document.querySelector('#gallery')){
     function galleryModifier() {
         const gallery = document.querySelector('#main__gallery');
         gallery.className = "displayGallery";
+        const img = document.querySelector('#main__gallery__monsterImage');
+        
     }
     function listModifier() {
         const gallery = document.querySelector('#main__gallery');
@@ -258,7 +286,7 @@ if(document.querySelector('#gallery')){
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    displayMonsterImg(e.target.result, file.name)
+                    displayMonsterImg(e.target.result, file.name, true)
                 };
                 reader.readAsDataURL(file);
             }
