@@ -1,5 +1,4 @@
-const myUrl = "https://v2.jokeapi.dev/joke/Any?lang=fr";
-let endIsDisplayed = [];
+
 //permet l'affichage du menu dropdown
 const dropdownMenu = document.querySelector(".header__menu__icon");
 dropdownMenu.addEventListener('click', displayMenu);
@@ -30,6 +29,8 @@ function displayMenu() {
 
 //va aller chercher le code en dessous uniquement si je suis sur la page du feed (page accueil)
 if(document.querySelector('#feed')){
+    const myUrl = "https://v2.jokeapi.dev/joke/Any?lang=fr";
+    let endIsDisplayed = [];
     //appel de l'API x fois, pour avoir x blagues
     async function loadJoke() {
         fetch(myUrl)
@@ -77,6 +78,8 @@ if(document.querySelector('#feed')){
         }
     }
 
+
+    // définit le nombre de blagues affichées
     displayJokesFeed(10); 
 
     const reloadButton = document.querySelector(".main__reloadButton");
@@ -103,14 +106,14 @@ if(document.querySelector('#feed')){
             divAddForm.appendChild(form);
             
             form.innerHTML = `
-            <fieldset>
+            <form
                 <legend>Votre blague à ajouter</legend>
                 <label for="setup">Question :</label><br>
                 <input type="text" id="setup" name="setup" required><br>
                 <label for="delivery">Réponse :</label><br>
                 <input type="text" id="delivery" name="delivery"><br>
                 <button type="submit" class="main__addForm__form__submitButton">Afficher ma blague</button>
-            </fieldset>
+            </form>
             <p>OU :</p>
             `
             const submitButton = document.querySelector(".main__addForm__form__submitButton");
@@ -137,6 +140,7 @@ if(document.querySelector('#feed')){
         let addedJoke = {};
         addedJoke.setup = document.querySelector('#setup').value;
         addedJoke.delivery = document.querySelector('#delivery').value;
+        console.log(addedJoke);
         return addedJoke;
 
 
@@ -157,4 +161,110 @@ if(document.querySelector('#feed')){
 
         isFormDisplayed = false;
     }
+}
+
+//va aller chercher le code en dessous uniquement si je suis sur la page du feed (page accueil)
+if(document.querySelector('#gallery')){
+    //affichage du feed d'image de monstres
+    const numberMonsterImg = 10;
+    let monstersList;
+
+    //charge une liste de monstres
+    async function loadMonsterList(){
+        const resp = await fetch('https://www.dnd5eapi.co/api/2014/monsters');
+        const data = await resp.json();
+        return data;
+    }
+
+    //choisit de manière aléatoire des moinstres dans cette liste et va chercher leur nom + URL de leur image
+    async function chooseRandomMonster() {
+            let randomIndex = Math.floor(Math.random()*monstersList.count);
+            let URL = 'https://www.dnd5eapi.co'+monstersList.results[randomIndex].url;
+            fetch(URL)
+                .then(resp => resp.json())
+                .then(monster => displayMonsterImg('https://www.dnd5eapi.co'+monster.image, monster.name))
+    }
+
+    //affiche l'image du monstre
+    function displayMonsterImg(imgUrl, monsterName) {
+        const gallery = document.querySelector('#main__gallery');
+        gallery.className = "displayGallery";
+        const imgCard = document.createElement('img');
+        gallery.appendChild(imgCard);
+        imgCard.src = imgUrl;
+        imgCard.className ="main__gallery__monsterImage--gallery" ;
+        imgCard.alt=monsterName;
+        imgCard.title=monsterName;
+    } 
+    
+    //permet l'affichage de la gallerie de monstre avec un nombre d'images défini
+    async function displayMonsterGallery(){
+        monstersList = await loadMonsterList();
+        for (i=0; i<numberMonsterImg; i++){
+            chooseRandomMonster();
+        }
+    }
+
+    //création de 2boutons qui swipent l'affichage en vue gallerie/liste
+    const buttonGallery = document.querySelector('.main__buttonView--gallery');
+    buttonGallery.addEventListener('click', galleryModifier);
+    const buttonList = document.querySelector('.main__buttonView--list');
+    buttonList.addEventListener('click', listModifier);
+
+    function galleryModifier() {
+        const gallery = document.querySelector('#main__gallery');
+        gallery.className = "displayGallery";
+    }
+    function listModifier() {
+        const gallery = document.querySelector('#main__gallery');
+        gallery.className = "displayList";
+    }
+
+    displayMonsterGallery();
+
+    //création bouton ajout image
+    const buttonAddImg = document.querySelector('.main__addButton');
+    buttonAddImg.addEventListener('click', addImgForm);
+    
+    let addImgIsDisplayed = false;
+
+    function addImgForm() {
+        if (!addImgIsDisplayed) {
+            const divAddImg = document.querySelector("#main__addImg");
+            const addImgWindow = document.createElement('div');
+            addImgWindow.className = 'main__addImgWindow';
+            divAddImg.appendChild(addImgWindow);
+
+            addImgWindow.innerHTML = `
+            <form>
+                <label for="myfile">Choisis ton image : </label>
+                <input type="file" id="addedImg" name="addedImg" accept='.png, .jpeg, .jpg'>
+                <button type="submit" class="main__addImg__submitButton">Ajouter mon monstre</button>
+            </form> `;
+            addImgIsDisplayed = true;
+        } else {
+            const addImgWindow = document.querySelector('.main__addImgWindow');
+            addImgWindow.remove();
+            addImgIsDisplayed = false;
+        }
+
+        const submitButton = document.querySelector(".main__addImg__submitButton");
+        submitButton.addEventListener('click', displayAddedImg);
+    }
+
+    function displayAddedImg() {
+            let input = document.querySelector('#addedImg');
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    displayMonsterImg(e.target.result, file.name)
+                };
+                reader.readAsDataURL(file);
+            }
+
+            const divAddImg = document.querySelector("#main__addImg");
+            divAddImg.innerHTML = '';
+            addImgIsDisplayed = false;
+        }
 }
