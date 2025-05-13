@@ -206,6 +206,7 @@ if(document.querySelector('#gallery')){
         gallery.appendChild(imgCard);
         imgCard.innerHTML = `<img src='${imgUrl}' alt='${monsterName}' id='main__gallery__monsterImage' class='main__gallery__monsterImage--gallery' title='${monsterName}'>`;
 
+        //affichage bouton suppression si l'image a été ajoutée manuellement
         if (manuallyAdded){
             const removeButton = document.createElement('div');
             imgCard.appendChild(removeButton);
@@ -294,5 +295,50 @@ if(document.querySelector('#gallery')){
             const divAddImg = document.querySelector("#main__addImg");
             divAddImg.innerHTML = '';
             addImgIsDisplayed = false;
+    }
+
+    //carroussel publicité
+    let stockPub = { 
+        'Dofus Ocre' : 'image/dofusocre.jpeg',
+        'Dofus Pourpre' : 'image/dofuspourpre.jpeg',
+        'Dofus Turquoise' : 'image/dofusturquoise.jpeg'
+    };
+
+    function createCarrouselHtml () {
+        const carrouselDiv = document.querySelector('.main__pub');
+        const carrouselSpace = document.createElement('div');
+        carrouselSpace.className = 'main__pub__carrouselItems';
+        carrouselDiv.appendChild(carrouselSpace);
+        for (const paire in stockPub) {
+            const carrouselItem = document.createElement('div');
+            carrouselSpace.appendChild(carrouselItem);
+            carrouselItem.className = 'main__pub__carrouselItems__item';
+            carrouselItem.innerHTML = `
+            <img src='${stockPub[paire]}' alt='${paire}'>
+            <div class='item__text'>${paire}</div>`;
         }
+    }
+    createCarrouselHtml();
+
+    const carouselItems = document.querySelectorAll(".main__pub__carrouselItems__item"); 
+    let i = 1;
+
+    setInterval(() => {
+    Array.from(carouselItems).forEach((item) => {
+
+    if(i < carouselItems.length){
+        item.style.transform = `translateX(-${i*100}%)`
+    }
+    })
+
+
+    if(i < carouselItems.length){
+        i++;
+    }
+    else{
+        i=0;
+    }
+    },1500)
+
+
 }

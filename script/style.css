@@ -162,3 +162,22 @@ fieldset {
     border-radius: 2rem;
 }
 
+.main__pub__carrouselItems {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+}
+.main__pub__carrouselItems__item {
+    position: relative;
+    min-width: 100%;
+    left: 35%;
+    
+}
+.item__text {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 10%;
+    background-color: #50464688;
+    padding: 0.5rem;
+    border-radius: 1rem;
+}
