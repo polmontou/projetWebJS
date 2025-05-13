@@ -13,6 +13,7 @@ header {
     background-color: #838358f5;
     border-radius: 1rem;
     position: sticky;
+    z-index: 1;
     top: 1rem;
     transition: 0.3s;
     box-shadow: 0.5rem 0.5rem 0.5rem #8ba014;
@@ -80,7 +81,17 @@ main {
     border-radius: 0.5rem;
     transition: 0.3s;
 }
-.main__title__button:hover {
+.main__removeAddedContent {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: 0.3s;
+    text-align: center;
+    position: absolute;
+    top: 0.8rem;
+    right: 1rem;
+    width: 2rem;
+}
+.main__title__button:hover, .main__removeAddedContent:hover {
     background-color: #8ba014;
     box-shadow: 0.2rem 0.2rem;
 }
@@ -132,7 +143,6 @@ fieldset {
 }
 .displayGallery {
     display: flex;
-    width: 100%;
     flex-wrap: wrap;
     justify-content: center;
     gap: 3rem;
@@ -141,8 +151,14 @@ fieldset {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    align-items: center;
+}
+
+#main__gallery div:not(.main__removeAddedContent) {
+    width: 30%;
 }
 .main__gallery__monsterImage--gallery {
-    width: 30%;
+    width: 100%;
     border-radius: 2rem;
 }
+
