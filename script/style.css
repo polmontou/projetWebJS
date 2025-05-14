@@ -161,7 +161,9 @@ fieldset {
     width: 100%;
     border-radius: 2rem;
 }
-
+.main__pub {
+    width: 100%;
+}
 .main__pub__carrouselItems {
     display: flex;
     flex-wrap: nowrap;
