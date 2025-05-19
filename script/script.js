@@ -25,10 +25,22 @@ function displayMenu() {
         isMenuDisplayed = false;
     }
 }
-
+    function addRemoveButton(div) {
+        const removeButton = document.createElement('div');
+        div.appendChild(removeButton);
+        div.style.position = 'relative';
+        removeButton.className = "main__removeAddedContent";
+        removeButton.textContent= "X";
+        removeButton.addEventListener('click', () => removeAddedContent(div));
+    }
+ 
+    function removeAddedContent(div) {
+        div.remove();
+    }
 
 //va aller chercher le code en dessous uniquement si je suis sur la page du feed (page accueil)
 if(document.querySelector('#feed')){
+
     const myUrl = "https://v2.jokeapi.dev/joke/Any?lang=fr";
     let endIsDisplayed = [];
     //appel de l'API x fois, pour avoir x blagues
@@ -72,16 +84,7 @@ if(document.querySelector('#feed')){
         buttonReveal.addEventListener('click', displayJokesEnd);
         feed.appendChild(jokeCard);
         if (manuallyAdded){
-            const removeButton = document.createElement('div');
-            jokeCard.appendChild(removeButton);
-            jokeCard.style.position = 'relative';
-            removeButton.className = "main__removeAddedContent"
-            removeButton.textContent= "X";
-
-            removeButton.addEventListener('click', removeAddedContent);
-            function removeAddedContent() {
-                jokeCard.remove()
-            }
+            addRemoveButton(jokeCard);
         }
 
     }
@@ -203,25 +206,15 @@ if(document.querySelector('#gallery')){
         const gallery = document.querySelector('#main__gallery');
         gallery.className = "displayGallery";
         const imgCard = document.createElement('div');
+        //imgCard.id = `indexImg${indexImg++}`;
         gallery.appendChild(imgCard);
         imgCard.innerHTML = `<img src='${imgUrl}' alt='${monsterName}' id='main__gallery__monsterImage' class='main__gallery__monsterImage--gallery' title='${monsterName}'>`;
 
         //affichage bouton suppression si l'image a été ajoutée manuellement
         if (manuallyAdded){
-            const removeButton = document.createElement('div');
-            imgCard.appendChild(removeButton);
-            imgCard.style.position = 'relative';
-            removeButton.className = "main__removeAddedContent"
-            removeButton.textContent= "X";
-
-
-
-            removeButton.addEventListener('click', removeAddedContent);
-            function removeAddedContent() {
-                imgCard.remove()
-            }
+            addRemoveButton(imgCard);
         }
-        }
+    }
      
     
     //permet l'affichage de la gallerie de monstre avec un nombre d'images défini
